@@ -32,7 +32,7 @@ Writes Suno v6 prompts with original, non-generic lyrics, and Studio 2.0 chat pr
 | `/suno-session-musician <instrument or ask>` | Session player for one part on a song you already have in Suno Studio 2.0: charts the track, picks the role and the hole, writes the Studio Chat message per region | `lyrics/<slug>/parts.md` when the song folder exists |
 
 How they fit:
-- `suno-create-song/craft.md` is the songwriting rulebook (specificity, POV, prosody, rhyme, structure, AI tells). `suno.md` is the Suno v6 mechanics (limits, style box, tags, exclude box, sliders). `words.txt` is the two-tier cliché list. All three skills read them.
+- `suno-create-song/craft.md` is the songwriting rulebook (specificity, POV, spine and movement, prosody, rhyme, structure, AI tells, per-line and whole-song review). `suno.md` is the Suno v6 mechanics (limits, style box, tags, exclude box, sliders). `words.txt` is the two-tier cliché list. All three skills read them.
 - `scripts/check_lyrics.py` runs on every song: blocks tier-1 words, scores tier-2 density, reads rhyme schemes and syllable spread, flags lazy rhyme pairs, chorus drift, tag mistakes, digits, and bad Style or Exclude text. `--self-test` verifies it.
 - `suno-session-musician/session.md` is the session-playing rulebook (listening pass, roles, arrangement rules, instrument idioms, prompt vocabulary, judging takes). Studio 2.0 mechanics are sourced in `research/suno-studio.md`.
 - `lyrics/voice.md` is per project and optional. Everything in it is a guideline, never a lock: defaults, dated preferences, observed habits from lyrics you wrote, influence trait cards, samples, hated words. The request always wins.
@@ -52,4 +52,5 @@ Maintenance:
 - Suno v6 shipped 2026-09-09 and retired older models. Numbers in `suno.md` are community-measured; re-verify after each Suno release.
 - Studio 2.0 shipped 2026-08-13 (Premier only). Its chat is documented as tempo-aware, not key-aware; the Style field beside the chat and the per-generation credit cost are unverified. See `research/suno-studio.md`.
 - Cliché lists drift. Re-check r/SunoAI every few months; today's fix becomes next year's tell.
+- `suno-create-song` runs at `effort: medium` (frontmatter): about 2.5 to 5 minutes a song. At the default xhigh effort a song took 7 to 13 minutes, and a detail-heavy request stalled past 14 and 45 minutes; medium finished that request in under 5 with a clean checker run. Measured 2026-09-11. A multi-agent pipeline was rejected: the time is one drafting turn, and splitting the draft across agents attacks cohesion. Delete the `effort` line to write at your session effort.
 - `research/` holds the sourced reports (Suno mechanics, lyric craft, the packs this was built from). `examples/` holds test songs that passed the checker.
