@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Suno Create Song
 
-Turn a request into a paste-ready Suno v6 prompt: original lyrics, style prompt, exclude list, settings. Read [craft.md](craft.md), [suno.md](suno.md), and [words.txt](words.txt) before drafting. They are the rules; this file is the order.
+Turn a request into a paste-ready Suno v6 prompt: original lyrics, style prompt, exclude list, settings. Read [craft.md](craft.md), [suno.md](suno.md), and [words.txt](words.txt) in one `cat` before drafting. They are the rules; this file is the order.
 
 ## 0. Branch
 - `lyrics/voice.md` exists in the project → read it. Defaults, dated preferences, observed habits, influence trait cards, the user's own samples, hated words. All guidelines: a lean, not a lock. The request wins; when it departs from the file, follow the request without comment. Match their diction. Ignore `lyrics/voice-proposed.md`.
@@ -20,8 +20,9 @@ Needed: subject or story · genre or vibe · narrator and POV · vocal gender ·
 ## 2. Plan before drafting
 - Three one-sentence angles on the subject. Pick the least obvious one the details support.
 - Two or three title candidates. Interrogate the chosen title: who, what, when, where, why, how.
-- POV and tense. Stable or unstable per section (craft.md §4).
-- Structure from genre and story (craft.md §9), not a template. Fallback: Intro, V1, Chorus, V2, Chorus, Bridge, Final Chorus, Outro. Avant-garde shapes (no chorus, through-composed, spoken sections, a form broken on purpose) are welcome when the request or genre leans that way.
+- Four short lines, kept in the note if the request left them open: the spine sentence, the image world, the carrier object, the change map (what moves between verse 1 and the last verse) (craft.md §3). For a no-story request, the three constants instead.
+- POV and tense. Stable or unstable per section (craft.md §5).
+- Structure from genre and story (craft.md §10), not a template. Fallback: Intro, V1, Chorus, V2, Chorus, Bridge, Final Chorus, Outro. Avant-garde shapes (no chorus, through-composed, spoken sections, a form broken on purpose) are welcome when the request or genre leans that way.
 - Per section: line count, syllable target, rhyme scheme. Verse, chorus, bridge each different.
 - When there is a chorus, write it first. Without one, write the line the whole song turns on first.
 
@@ -37,7 +38,7 @@ Add `--loose` only for hip-hop, where line lengths vary on purpose. Spoken secti
 - **ERROR** (tier-1 word, over length, bad Style or Exclude) → fix. No exceptions.
 - **WARN** (rhyme, syllables, tier-2 cluster, tags, chorus drift) → fix, unless the request asked for that shape (nursery-rhyme AABB, wild hip-hop line lengths). Then keep it and say so in the note.
 - Replace a flagged line with specific sensory detail from the user's material. Never an adjacent abstraction; shadows → darkness is the same failure.
-- Then the review pass: craft.md §8 on every line. Rewrite what fails. Re-run until the output has no ERROR and no unexplained WARN. The rhyme readout misses multisyllabic and assonant rhymes, so for hip-hop judge rhyme density by ear, not by the script.
+- Then the review pass: craft.md §9, per line and whole song. Rewrite what fails; a whole-song failure (no spine, shuffleable verses, chorus that doesn't recolor) is fixed in the verses, not by adding lines. Re-run until the output has no ERROR and no unexplained WARN. The rhyme readout misses multisyllabic and assonant rhymes, so for hip-hop judge rhyme density by ear, not by the script.
 
 ## 5. Build and save
 Style (suno.md: tag stack, then direction sentences, 400–800 chars), Exclude, settings line. Save to `lyrics/<slug>/song.md` (create `lyrics/` if missing; slug is the kebab-case title):
@@ -65,7 +66,7 @@ Titles: <A> / <B> / <C>
 Model v6 · Vocal Gender: <Male/Female> · Weirdness <n>% · Style Influence <n>% · Variety 0 · Max Mode <on/off>
 
 ## NOTE
-<under 40 words: genre anchor, POV, structure, why, and any choice the request left open>
+<under 50 words: genre anchor, POV, structure, the spine in one clause, the withheld fact if any, and any choice the request left open>
 ~~~
 
 Reply with the same content in the same order: titles, the three code blocks, settings, note. Nothing else.
