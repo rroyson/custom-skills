@@ -26,15 +26,16 @@ Writes Suno v6 prompts with original, non-generic lyrics, and Studio 2.0 chat pr
 
 | Command | Does | Writes |
 |---|---|---|
-| `/suno-create-song <idea>` | Full prompt: style, exclude list, lyrics with section tags, slider settings | `lyrics/<slug>/song.md` in the current project |
-| `/suno-lyric-cowrite` | Co-writer on your own draft: names the stall, offers three directions, then candidate lines in your diction | only the section you accept |
+| `/suno-create-song <idea>` | Full prompt: style, exclude list, lyrics with section tags, slider settings | `lyrics/<slug>/lyrics.md` (themes and words) and `song.md` (Suno prompts) in the current project |
+| `/suno-lyric-cowrite` | Co-writer on your own draft: grills you for the feeling, story, and themes when they aren't settled, one question with options at a time; then names the stall, offers three directions, and candidate lines in your diction | `lyrics/<slug>/lyrics.md`: Themes as they settle, only the lines you accept |
 | `/suno-voice ...` | Your lyrical profile: taste notes, influences researched in the background, samples of your own lyrics | `lyrics/voice.md`, only after you approve each change |
 | `/suno-session-musician <instrument or ask>` | Session player for one part on a song you already have in Suno Studio 2.0: charts the track, picks the role and the hole, writes the Studio Chat message per region | `lyrics/<slug>/parts.md` when the song folder exists |
 
 How they fit:
-- `suno-create-song/craft.md` is the songwriting rulebook (specificity, POV, prosody, rhyme, structure, AI tells). `suno.md` is the Suno v6 mechanics (limits, style box, tags, exclude box, sliders). `words.txt` is the two-tier cliché list. All three skills read them.
+- `suno-create-song/craft.md` is the songwriting rulebook (specificity, POV, spine and movement, prosody, rhyme, structure, AI tells, per-line and whole-song review). `suno.md` is the Suno v6 mechanics (limits, style box, tags, exclude box, sliders). `words.txt` is the two-tier cliché list. All three skills read them.
 - `scripts/check_lyrics.py` runs on every song: blocks tier-1 words, scores tier-2 density, reads rhyme schemes and syllable spread, flags lazy rhyme pairs, chorus drift, tag mistakes, digits, and bad Style or Exclude text. `--self-test` verifies it.
 - `suno-session-musician/session.md` is the session-playing rulebook (listening pass, roles, arrangement rules, instrument idioms, prompt vocabulary, judging takes). Studio 2.0 mechanics are sourced in `research/suno-studio.md`.
+- Each song folder holds `lyrics.md`, the workspace (Themes, then Lyrics with bare section tags), and `song.md`, the paste-ready Suno prompts built from it. Word changes go into lyrics.md first. `suno-lyric-cowrite/themes.md` is the theme-tension list the grill offers when you don't know what a song is about yet.
 - `lyrics/voice.md` is per project and optional. Everything in it is a guideline, never a lock: defaults, dated preferences, observed habits from lyrics you wrote, influence trait cards, samples, hated words. The request always wins.
 
 Typical flow:
@@ -42,7 +43,9 @@ Typical flow:
 ```
 /suno-voice add influence <artist>          # background research, card shown for approval
 /suno-create-song <idea + 2-3 real details> # song.md saved, paste the three blocks into Suno
-/suno-lyric-cowrite I'm stuck on verse 2 of lyrics/<slug>/song.md
+/suno-lyric-cowrite <your hook or draft>     # grills for what it's about, keeps lyrics/<slug>/lyrics.md
+/suno-lyric-cowrite I'm stuck on verse 2 of lyrics/<slug>/lyrics.md
+/suno-create-song lyrics/<slug>/lyrics.md    # builds song.md from your finished lyrics
 /suno-session-musician lap steel on lyrics/<slug>/song.md   # Studio 2.0: select the region, paste the chat message
 ```
 
@@ -52,4 +55,5 @@ Maintenance:
 - Suno v6 shipped 2026-09-09 and retired older models. Numbers in `suno.md` are community-measured; re-verify after each Suno release.
 - Studio 2.0 shipped 2026-08-13 (Premier only). Its chat is documented as tempo-aware, not key-aware; the Style field beside the chat and the per-generation credit cost are unverified. See `research/suno-studio.md`.
 - Cliché lists drift. Re-check r/SunoAI every few months; today's fix becomes next year's tell.
+- `suno-create-song` and `suno-lyric-cowrite` run at `effort: medium` (frontmatter). Create-song takes about 2.5 to 5 minutes a song. At the default xhigh effort a song took 7 to 13 minutes, and a detail-heavy request stalled past 14 and 45 minutes; medium finished that request in under 5 with a clean checker run. Measured 2026-09-11. A multi-agent pipeline was rejected: the time is one drafting turn, and splitting the draft across agents attacks cohesion. Delete the `effort` line to write at your session effort.
 - `research/` holds the sourced reports (Suno mechanics, lyric craft, the packs this was built from). `examples/` holds test songs that passed the checker.

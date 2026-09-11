@@ -4,6 +4,7 @@
 Usage: check_lyrics.py [song.md | lyrics.txt] [--loose] [--words PATH] [--self-test]
 
 song.md: reads the STYLE / EXCLUDE STYLES / LYRICS fenced blocks (labelled by the heading above each fence).
+lyrics.md: the text under its `## Lyrics` heading, from the first section tag.
 Any other file (or stdin) is treated as lyrics only.
 --loose skips the syllable-spread check (hip-hop, spoken word).
 Exit 1 when any ERROR is found.
@@ -317,11 +318,21 @@ def check_exclude(ex):
     return F
 
 
+def lyrics_section(text):
+    # lyrics.md workspace: skip Themes and the status line, start at the first [tag] under "## Lyrics"
+    m = re.search(r"^##\s+Lyrics\s*$", text, re.M | re.I)
+    if not m:
+        return text
+    rest = text[m.end():].splitlines()
+    first = next((i for i, l in enumerate(rest) if TAG.match(l)), 0)
+    return "\n".join(rest[first:])
+
+
 def run(text, lists, loose=False):
     blocks = parse_blocks(text)
     lyrics = next((v for k, v in blocks.items() if "LYRIC" in k), None)
     if lyrics is None:
-        lyrics = text
+        lyrics = lyrics_section(text)
     F = check_lyrics(lyrics, lists, loose)
     style = next((v for k, v in blocks.items() if k.startswith("STYLE")), None)
     if style is not None:
@@ -421,7 +432,10 @@ def self_test(lists):
     clean = run(CLEAN, lists)
     bad = [f for f in clean if f[0] != "INFO"]
     assert not bad, bad
-    print("self-test OK: slop flagged, clean passes")
+    ws = "# T\n\n## Themes\n\n- Core: the ceiling\n\n## Lyrics\n\nOnly the hook so far\n\n[Chorus]\nIt's hard to bring the ceiling down\n"
+    assert lyrics_section(ws).startswith("[Chorus]"), lyrics_section(ws)
+    assert lyrics_section("[Verse 1]\nplain") == "[Verse 1]\nplain"
+    print("self-test OK: slop flagged, clean passes, lyrics.md section read")
 
 
 def main():
