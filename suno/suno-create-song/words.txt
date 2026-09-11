@@ -1,0 +1,251 @@
+# words.txt — read by scripts/check_lyrics.py and by the model.
+# One entry per line, lowercase. Single words also match inflections (s, es, ed, ing, d).
+# [tier1]  blocks output. Abstractions no human songwriter reaches for; rewrite, never swap for a neighbor.
+# [tier2]  watch list. Flagged when two land within four lines or five land in a song.
+#          Includes the "specific" props that became tells (cold coffee, polaroids, collarbone, duct tape).
+#          A tier-2 word is fine when it came from the user's own details.
+# [rhyme-pairs]  lazy end-rhyme pairs, one pair per line as "a/b".
+# [homographs]   words Suno may mispronounce; rewrite or spell phonetically.
+# [style-contamination]  words that make the Style box produce a concert recording.
+# Lists drift. Re-check r/SunoAI every few months; today's fix is next year's tell.
+
+[tier1]
+neon
+echo
+whisper
+shadow
+tapestry
+symphony
+delve
+crimson
+velvet
+ember
+stardust
+celestial
+ethereal
+unbreakable
+concrete jungle
+city lights
+into the night
+through the darkness
+through the storm
+weather the storm
+i am the storm
+chasing dreams
+chasing shadows
+broken dreams
+shattered dreams
+shattered glass
+breaking free
+breaking chains
+break the chains
+break these chains
+rise above
+rise up
+rise again
+we rise
+from the ashes
+like a phoenix
+in my veins
+fire in my soul
+fire inside
+burning bright
+heart of gold
+heart on my sleeve
+can you feel it
+still standing
+battle scars
+light in the dark
+alone in the dark
+dancing in the rain
+under the stars
+stars in your eyes
+moth to a flame
+ride or die
+time stands still
+forever and always
+till the end of time
+end of time
+every breath i take
+story unfolds
+stories untold
+in my mind
+hold on tight
+never let you go
+you're my everything
+you complete me
+live without you
+lost without you
+tears fall like rain
+silence is deafening
+demons in my head
+storm inside
+frozen heart
+spark of hope
+brick by brick
+pain into gold
+pull the trigger
+russian roulette
+young and free
+win the fight
+spread my wings
+lost in the moment
+wash away my sins
+standing at the crossroads
+
+[tier2]
+static
+glow
+ghost
+midnight
+moonlight
+heartbeat
+horizon
+hum
+pulse
+haze
+ashes
+chains
+fading
+fade away
+infinite
+eternal
+endless
+timeless
+hollow
+void
+abyss
+surrender
+reborn
+transcend
+resonate
+cascade
+drift
+flicker
+shimmer
+radiant
+divine
+mystic
+twilight
+dusk
+dawn
+electric
+phoenix
+soar
+embrace
+grace
+realm
+testament
+vibrant
+kingdom
+throne
+crown
+labyrinth
+maze
+mirror
+spark
+flame
+storm
+veins
+wings
+scars
+soul
+forever
+darkness
+silence
+silent
+gentle
+softly
+journey
+broken
+shattered
+dust
+rust
+clock
+ticking
+glass
+coffee
+polaroid
+collarbone
+duct tape
+halo
+dusty boots
+gasoline
+cigarette
+streetlight
+porch light
+rooftop
+asphalt
+pavement
+tangled sheets
+edge of dawn
+silent screams
+
+[rhyme-pairs]
+fire/desire
+heart/apart
+heart/start
+night/light
+girl/world
+cry/die
+pain/rain
+eyes/skies
+you/true
+baby/crazy
+feel/real
+fly/high
+tear/fear
+star/far
+love/above
+dream/seem
+mind/find
+town/down
+all/fall
+kiss/bliss
+dance/romance
+life/wife
+blue/you
+soul/whole
+free/me
+forever/together
+end/friend
+sky/fly
+wrong/strong
+more/before
+way/stay
+light/fight
+tonight/right
+alone/home
+sun/done
+
+[homographs]
+live
+read
+lead
+wind
+tear
+bow
+close
+wound
+bass
+row
+minute
+record
+present
+desert
+refuse
+object
+content
+
+[style-contamination]
+live
+arena
+crowd
+stadium
+concert
+audience
+unplugged
+clapping
+cheering
+applause
+bootleg
