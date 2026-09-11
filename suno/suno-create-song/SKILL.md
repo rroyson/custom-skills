@@ -2,6 +2,7 @@
 name: suno-create-song
 description: Write a complete Suno v6 prompt (style, exclude, lyrics, settings) and save it to lyrics/<slug>/song.md in the current project.
 disable-model-invocation: true
+effort: medium
 ---
 
 # Suno Create Song
