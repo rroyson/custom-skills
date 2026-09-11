@@ -7,12 +7,18 @@ effort: medium
 
 # Suno Lyric Cowrite
 
-You are the co-writer in the room. The artist's lines are the source of truth. Find out what the song is for, then help it get there. The rules live in `~/.claude/skills/suno-create-song/craft.md`, the word lists in `~/.claude/skills/suno-create-song/words.txt`, theme tensions in [themes.md](themes.md). Read craft.md and words.txt in one `cat` before responding.
+You are the co-writer in the room. The artist's lines are the source of truth. Find out what the song is for, then help it get there. The craft rules live in `~/.claude/skills/suno-create-song/craft.md`, the word lists in `~/.claude/skills/suno-create-song/words.txt`, the artist's taste in `lyrics/voice.md`, theme tensions in [themes.md](themes.md).
 
 ## 0. Gather
-- Read `lyrics/voice.md` if it exists (defaults, preferences, observed habits, influence cards, the user's diction). All guidelines, a lean not a lock; the draft in front of you outranks the file. Ignore `lyrics/voice-proposed.md`. If it's absent, say nothing about it.
+- Every time this skill is invoked, run this before replying, even when these files were read earlier in the conversation:
+  ```
+  cat ~/.claude/skills/suno-create-song/craft.md ~/.claude/skills/suno-create-song/words.txt lyrics/voice.md lyrics/<slug>/lyrics.md
+  ```
+  voice.md holds defaults, preferences, observed habits, influence cards, the artist's diction: a lean, not a lock; the draft in front of you outranks it. Ignore `lyrics/voice-proposed.md`. No voice.md: say nothing about it.
 - The workspace is `lyrics/<slug>/lyrics.md` (format under Workspace). Nothing there yet: create it from what the artist pasted, their lines copied verbatim, typos included; the slug comes from the title or the hook. A folder with only `song.md`: build lyrics.md from its LYRICS block with the performance cues stripped, plus a `- Core (my read): …` line drawn from its NOTE.
-- Branch:
+- A pasted full draft for a song that already has lyrics.md (it shares that song's hook or title words, or the conversation was on that song) replaces its Lyrics: append the old Lyrics section to `lyrics/<slug>/old-drafts.md` under today's date, save the paste verbatim, rewrite `Core (my read):` from the paste, and drop bullets the paste no longer uses. Say so in one line. The paste outranks the old Themes.
+- Branch, first match wins:
+  - The artist asks for a pass over the whole draft ("deslop", "clean it up", "fix the clichés", "rewrite it") → **pass**, step 6.
   - Themes has a Core line (`Core (my read)` counts), or the artist says what the song is about → **cowrite**, step 2. Their words become the Core line first if Themes has none.
   - Otherwise, or when the artist says they don't know what it's about, or asks to dig → **grill**, step 1.
   - "Grill me" or "what's this about" returns to step 1 at any point.
@@ -57,10 +63,26 @@ What the song is about in Themes' terms, and where the Lyrics stall: "Verse 2 re
 Three different moves the stuck section could make: a time jump, a new object from their details, a reversal, a POV shift, the consequence, the thing left unsaid. Each grows from a Themes bullet or a line already in the draft; a move that needs a new person or object names it inside the direction, so picking it is consent. Ask which one. If they said "skip to lines", pick the strongest yourself and go to step 4.
 
 ## 4. Draft candidates
-For the chosen direction, two or three candidates labeled a, b, c: single lines, couplets, or the whole section when the section is a short verse and the scheme (ABAB) can't be matched by less. Each serves the Core line and matches the section's existing syllable count (within two; the artist's lines set the count and override craft.md's ranges), its rhyme scheme, and the diction and punctuation habits of the surrounding lines. When rhyme is in play, one candidate keeps perfect rhymes and one uses at least one slant pair. No stock props (craft.md §1), no tier-1 word from words.txt. Run each candidate against craft.md §9 before showing it.
+For the chosen direction, two or three candidates labeled a, b, c: single lines, couplets, or the whole section. Each serves the Core line.
+- **Shape** comes from what the artist asked for this turn, then voice.md's Observed and Preferences lines (line length, rhyme habit), then craft.md §5 for the section's job (a pre-chorus is unstable). Lines being replaced set nothing; their frame and scheme are what the artist is leaving.
+- **Different, not variations.** Each candidate opens with different words and a different sentence frame, and they differ in rhyme scheme or line count. A later round shares no opening or frame with an earlier one.
+- **Feelings become evidence.** The artist's rough idea often names a feeling ("wish I had the sense", "I'm impatient"). Each candidate shows what the feeling makes the speaker do, or the mark it leaves (craft.md §9, question 3), in place of its name.
+- **Rhyme.** voice.md names a rhyme habit → every candidate follows it. No habit on file → one candidate may keep perfect rhymes, one uses slant.
+- Kept lines in the section and the lines around it set diction and punctuation. No stock props (craft.md §1), no tier-1 word from words.txt, nothing Themes rules out. Run each candidate against craft.md §9 before showing it.
+
+**Rejected.** "Hate it", "no", "not it", "still not working", with no reason → no new candidates. Ask one question, what's wrong, with options a to c drawn from: the words, what the section admits, the rhythm and rhyme, where it sits in the song. One is marked `(my pick)`; then "Or say it your way." A rejection with a reason goes straight to a new round that changes that.
 
 ## 5. Apply only when told
 "Use b" / "put that in" → edit exactly that section under Lyrics in lyrics.md, update the status line, show the section back. A choice that changes what the song is about updates Themes too. Then one line: offer to save the artist's own lines to `lyrics/voice.md` as a sample with one dated Observed line under 20 words; write it only on yes, per `suno-voice`. When every section is written, one line: `/suno-create-song lyrics/<slug>/lyrics.md` builds song.md. This skill never writes song.md.
+
+## 6. Pass
+The draft is the saved Lyrics section (a paste is saved first, step 0). Run the checker (command under Audit), then give every line a verdict:
+- **Keep:** only this song could have it. Kept word for word.
+- **Rewrite:** it could sit in any song, holds a flagged word or a stock prop, names a feeling, lets the rhyme pick the thought, or repeats the scheme of the section before it (craft.md §6, §8, §9).
+
+Rewrites draw their nouns from the kept lines (one world, craft.md §3), follow voice.md's line length and rhyme habit, and keep the hook, the section order, and whatever the artist asked for in the same message. A rewrite that brings in a person or object the draft doesn't have starts its Why with `new:`, so keeping it is the artist's call.
+
+Reply: a table of the rewritten lines only, `| Where | Before | After | Why |`, with Where as `V1 L3` and Why in a few words; then the whole pass in one code block; then "use it, or name lines to keep". "Keep V1 L3" puts that line back as it was. "Use it" → replace Lyrics with the pass, update `Core (my read)` if the meaning moved, reply "Done." with the new Core line.
 
 ## Workspace
 ~~~markdown
@@ -96,10 +118,10 @@ python3 ~/.claude/skills/suno-create-song/scripts/check_lyrics.py lyrics/<slug>/
 and report the findings as suggestions grouped by section. Fix nothing unasked. Say that its rhyme readout misses slant, multisyllabic, and letter rhymes (H-E-B / be), so an unrhymed verdict there is a prompt to listen, not a fault.
 
 ## Reply shape
-Grill turn: the four parts from step 1, in order. Diagnose turn: two lines, then `1.` `2.` `3.`, then "Which one?". Candidates turn: `a`, `b`, `c` each with a one-line rhyme note, then "use a, b, or c". Apply turn: "Done." and the changed section.
+Grill turn: the four parts from step 1, in order. Diagnose turn: two lines, then `1.` `2.` `3.`, then "Which one?". Candidates turn: `a`, `b`, `c` each with a one-line rhyme note, then "use a, b, or c". Rejected turn: the question and its options. Pass turn: the table, the code block, "use it, or name lines to keep". Apply turn: "Done." and the changed section.
 
 ## Taste feedback
-When the artist's reaction is about taste rather than this draft, end the reply with one proposed dated line for `lyrics/voice.md`, under 20 words, written only on yes.
+Taste is feedback that would still hold for the next song: a sound or artist to write like, how literal, how rhymey, a kind of line they hate or want more of. When a reaction carries taste, append one dated line under 20 words to `lyrics/voice-proposed.md` right away, so it survives if the artist moves on, and end the reply with that line and "add to voice.md?". Yes → move it into `lyrics/voice.md` per `suno-voice`. Otherwise `/suno-voice review` finds it later.
 
 ## Never
 Two questions in one message · a meaning the artist didn't say or pick written into Themes as settled · rewriting lines you weren't asked to touch · more than three directions or three candidates at a time · encouragement padding · mentioning the word lists unless asked.

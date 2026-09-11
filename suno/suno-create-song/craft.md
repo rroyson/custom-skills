@@ -31,7 +31,7 @@ Decided before the first line. A song that fails here reads as a pile of good li
 
 ## 4. Section jobs
 - **Verse:** a small moment, in scene. Action, concrete noun, one detail (a brand, a number, a time, a place). Verse 2 answers "then what happened?" or "what happened before?" with information verse 1 didn't have, and moves the camera (§3). A verse 2 that restates verse 1 is the most common failure.
-- **Pre-chorus:** two to four short lines, tension, an incomplete pattern that points at the chorus.
+- **Pre-chorus:** two to four short lines, tension, an incomplete pattern that points at the chorus. The two lines before any chorus leave its hook, title, end words, and signature image for the chorus to say.
 - **Chorus:** the big idea in plainer words, the title on the first or last line, four to six lines. Same text every time; the last chorus may change one or two non-hook lines.
 - **Bridge:** a departure. New angle, new POV, new time, the twist, the thing unsaid. A rhyme scheme unlike verse and chorus.
 - **Title:** reach it inside the first minute in commercial genres. Interrogate it (who, what, when, where, why, how) and pick one that changes color verse to verse. Bar test: said aloud in a bar, does a stranger turn their head?
@@ -76,6 +76,9 @@ A broken-heart verse in four equal AABB perfect-rhyme lines sounds like reading 
 - Verses that could be shuffled. A chorus that lists the verses' props. A bridge that restates.
 - No proper nouns, no time, no place, no "I", no slang, no profanity, no humor.
 - Cosmic and elemental wallpaper: stars, fire, sky, rain, light, storm, ashes, wings, veins.
+- An image, then a line explaining it ("I keep the ticket stub / proof I almost left"). Keep the image, cut the explanation.
+- Pep-talk phrases: rise above, break free, keep reaching higher, never give up. They stand in for what this person would actually say.
+- The arc resolves on schedule: problem, struggle, triumph, and a last line that wins the fight the title says is hard. Leave the cost, or leave it open.
 
 ## 9. Review, before output
 Per line:
@@ -93,6 +96,7 @@ Whole song:
 10. Does the chorus mean something new after verse 2? Does the last line know something the first didn't?
 11. Do all concrete nouns come from one world? Name the job each image does for the spine; cut the ones without one.
 12. Is a feeling named anywhere? Replace it with what the carrier object does.
+13. Does any line explain the image before it? Do the two lines before a chorus give away its words?
 
 ## 10. Genre notes
 - **Country:** scene, object, a twist in the bridge or last verse; hook inside 30 seconds; ABAB or AABB with mostly perfect rhyme is native; conversational contractions.
@@ -101,6 +105,8 @@ Whole song:
 - **Pop:** chorus inside 30 seconds; short chorus lines; XAXA conversational verses; near rhymes preferred; if it sounds crafted it fails.
 - **Rock / indie:** imagery and energy over rhyme; quiet verse, loud chorus; 8–10 syllable lines.
 - **Punk:** four-line verses, two- to four-line shoutable chorus, half-rhymes fine, one slogan yelled; done in 2:30.
+- **Emo:** confessional first person, one vivid sensory detail a section, quiet verse into a loud chorus; near rhymes welcome; verses four to eight lines.
+- **Dance-punk, dance rock:** rhythm over rhyme; loose ABAB or free verse with slant and internal rhyme; lines land like percussion; one repeated phrase can carry the chorus; four or five lines a verse at 120–135 BPM.
 - **Metal / industrial:** tactile objects, short clauses, a yellable title; rhyme optional; delete any abstract noun a physical object can replace.
 - **Electronic:** the drop is the peak; one verse, a repeated phrase for a hook, no bridge.
 - **R&B / soul:** leave space for runs; emotion first; an outro vamp is native.

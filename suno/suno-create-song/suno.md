@@ -21,7 +21,7 @@ Shape: tag stack, then one or two direction sentences.
 1. **Genre, subgenre, era.** `Country, Outlaw Country, 70s`. Primary genre first, never a bare genre. In a fusion one genre leads (rhythm section, vocals, main instruments); the other is texture. `Thrash Metal foundation with EDM textures in the production` beats `Thrash Metal, EDM`. Era anchors sharpen everything: `80s glam metal` beats `metal`.
 2. **Mood and tempo.** `defiant, urgent, 160 BPM` or an Italian marking (`Andante`). BPM lands about 90% of the time.
 3. **Instruments.** Two or three, each with an adjective: `overdriven Telecaster, brushed drums, upright bass`.
-4. **Vocals.** Character and delivery, not range: `gritty baritone, half-spoken verses, belted chorus`. Put it early.
+4. **Vocals.** Character and delivery, not range: `warm baritone, half-spoken verses, belted chorus`. Texture words are sung literally: raw, gritty, raspy, hoarse, strained, cracking, and half-shouted all put rasp in the voice. Use them only when the request names a rough voice; a genre (emo, punk) or a mood (heart-wrenching) is not that request. Otherwise say clear, clean, or full-voiced and let delivery words (hushed verses, belted chorus) carry the intensity. Mood words (powerful, defiant) don't change the voice. Put it early.
 5. **Production.** Two to four cues: spatial (`dry`, `room ambience`, `wide stereo`), tonal (`warm`, `crisp`, `saturated`), dynamic (`punchy`, `tight`), era (`vintage tape`, `modern digital polish`, `lo-fi grit`).
 6. **Direction.** One or two sentences for what tags can't say: the arrangement arc, the ending, total length. `Drops to bare piano for the last chorus. Ends on a hard stop after the last word.`
 
@@ -74,3 +74,4 @@ It is a filter, not a guarantee, and it barely works on vocal traits. Every excl
 | Excluded thing still there | Style implies it; name the replacement instead |
 | Words changed in the take | Suno favors neon, echo, ghost, velvet; keep lyrics short and clean |
 | Wrong vocal gender | Vocal Gender toggle plus vocal adjectives in Style |
+| Vocal too raspy or strained | Style asked for it (raw, gritty, strained, cracking, shouted); name the tone wanted: clear, clean, full-voiced |

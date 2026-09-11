@@ -7,6 +7,7 @@
 # [rhyme-pairs]  lazy end-rhyme pairs, one pair per line as "a/b".
 # [homographs]   words Suno may mispronounce; rewrite or spell phonetically.
 # [style-contamination]  words that make the Style box produce a concert recording.
+# [vocal-grit]  words that put rasp in the lead vocal when they sit in the Style box's vocal sentence.
 # Lists drift. Re-check r/SunoAI every few months; today's fix is next year's tell.
 
 [tier1]
@@ -92,6 +93,20 @@ spread my wings
 lost in the moment
 wash away my sins
 standing at the crossroads
+
+# pep-talk phrases, 2026-09-11 (bitwize-music-studio voice-checker, CC0)
+break free
+against all odds
+never give up
+shatter the silence
+rewrite the story
+set me free
+reach higher
+voice of the voiceless
+through the fire
+light in the darkness
+learning to fly
+cold as ice
 
 [tier2]
 static
@@ -181,6 +196,11 @@ tangled sheets
 edge of dawn
 silent screams
 
+stand tall
+find my way
+turn the page
+by my side
+
 [rhyme-pairs]
 fire/desire
 heart/apart
@@ -249,3 +269,15 @@ clapping
 cheering
 applause
 bootleg
+
+[vocal-grit]
+raw
+grit
+rasp
+hoarse
+strain
+crack
+gravel
+half-shout
+scream
+rough

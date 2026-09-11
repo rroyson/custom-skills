@@ -7,16 +7,21 @@ effort: medium
 
 # Suno Create Song
 
-Turn a request into a paste-ready Suno v6 prompt: original lyrics, style prompt, exclude list, settings. Read [craft.md](craft.md), [suno.md](suno.md), and [words.txt](words.txt) in one `cat` before drafting. They are the rules; this file is the order.
+Turn a request into a paste-ready Suno v6 prompt: original lyrics, style prompt, exclude list, settings. [craft.md](craft.md), [suno.md](suno.md), and [words.txt](words.txt) are the rules; this file is the order.
 
-## 0. Branch
-- `lyrics/voice.md` exists in the project → read it. Defaults, dated preferences, observed habits, influence trait cards, the user's own samples, hated words. All guidelines: a lean, not a lock. The request wins; when it departs from the file, follow the request without comment. Match their diction. Ignore `lyrics/voice-proposed.md`.
+## 0. Read, then branch
+- Every time this skill is invoked, run this before replying, even when these files were read earlier in the conversation, and add the song's `lyrics.md` and `song.md` when the request names a song:
+  ```
+  cat ~/.claude/skills/suno-create-song/craft.md ~/.claude/skills/suno-create-song/suno.md ~/.claude/skills/suno-create-song/words.txt lyrics/voice.md
+  ```
+- `lyrics/voice.md`: defaults, dated preferences, observed habits, influence trait cards, the user's own samples, hated words. All guidelines: a lean, not a lock. The request wins; when it departs from the file, follow the request without comment. Match their diction. Ignore `lyrics/voice-proposed.md`.
+- The request names a song that has `lyrics/<slug>/lyrics.md` → work in that folder, whatever the branch. Its Themes are the artist's: the seed sentences above the bullets stay word for word, and every bullet stays unless the request contradicts it, in which case that bullet alone is rewritten.
 - The request contains finished lyrics or names a `lyrics/<slug>/lyrics.md` → **lyrics-provided** (step 6).
 - The request changes an existing song in `lyrics/<slug>/` → **revision** (step 7).
 - Otherwise → write (steps 1–5).
 
 ## 1. Intake, one message, only what's missing
-Needed: subject or story · genre or vibe · narrator and POV · vocal gender · two or three real concrete details (a name, a place, an object, a date, a moment) · for a memory, where that person or object is now. If the details are missing, ask; do not write without them and never substitute stock props (craft.md §1). Everything else (mood, tempo, length, structure) you decide; the note names the ones that shaped the song.
+Needed: subject or story · genre or vibe · narrator and POV · vocal gender · two or three real concrete details (a name, a place, an object, a date, a moment) · for a memory, where that person or object is now. Take each from the request, then the song's Themes, then voice.md's Defaults; ask only for what none of them gives, and do not write without the details. A song with Themes already has its story and details: when the request might throw the story out ("I don't like anything but the hook"), the whole intake is one question, keep the Themes story (my pick) or tell me the new one. Never substitute stock props (craft.md §1). Everything else (mood, tempo, length, structure) you decide; the note names the ones that shaped the song.
 
 ## 2. Plan before drafting
 - Three one-sentence angles on the subject. Pick the least obvious one the details support.
@@ -42,7 +47,7 @@ Add `--loose` only for hip-hop, where line lengths vary on purpose. Spoken secti
 - Then the review pass: craft.md §9, per line and whole song. Rewrite what fails; a whole-song failure (no spine, shuffleable verses, chorus that doesn't recolor) is fixed in the verses, not by adding lines. Re-run until the output has no ERROR and no unexplained WARN. The rhyme readout misses multisyllabic and assonant rhymes, so for hip-hop judge rhyme density by ear, not by the script.
 
 ## 5. Build and save
-Style (suno.md: tag stack, then direction sentences, 400–800 chars), Exclude, settings line. Save two files in `lyrics/<slug>/` (create folders if missing; slug is the kebab-case title). `lyrics.md` holds the words and what they're for; `song.md` holds what gets pasted into Suno. The lyrics are the same text in both; song.md adds the performance cues.
+Style (suno.md: tag stack, then direction sentences, 400–800 chars), Exclude, settings line. Save two files in `lyrics/<slug>/` (create folders if missing; slug is the kebab-case title). `lyrics.md` holds the words and what they're for; `song.md` holds what gets pasted into Suno. The lyrics are the same text in both; song.md adds the performance cues. When lyrics.md already exists, append its old Lyrics section to `lyrics/<slug>/old-drafts.md` under today's date before replacing it, and keep its Themes per step 0.
 
 `song.md`:
 
@@ -78,7 +83,7 @@ Model v6 · Vocal Gender: <Male/Female> · Weirdness <n>% · Style Influence <n>
 
 ## Themes
 
-<the request's own words for what the song is about, one to four lines>
+<the artist's sentences already here, word for word; then the request's own words for what the song is about, one to four lines>
 
 - Core: <the spine: one sentence with the change in it>
 - <label in the song's own words>: <an idea and where it plays out: which section, what moves>
@@ -100,7 +105,7 @@ The lyrics come pasted, or from the Lyrics section of `lyrics/<slug>/lyrics.md`,
 Change only what was asked, in lyrics.md first; every other line stays identical. Carry the change into song.md's LYRICS block, re-run the checker, name the change in the note. A folder with only song.md gets its lyrics.md first: the LYRICS block with cues stripped, and a `Core (my read)` line.
 
 ## 8. Taste feedback
-When feedback is about taste rather than this song ("too rhymey", "I hate that word", "more lines like that"), end the reply with one proposed dated line for `lyrics/voice.md`, under 20 words, and write it only on yes. Never infer taste silently.
+When feedback would still hold for the next song ("too rhymey", "I hate that word", "the vocal's too raspy", "more lines like that"), append one dated line under 20 words to `lyrics/voice-proposed.md` right away, so it survives if the user moves on, and end the reply with that line and "add to voice.md?". Yes → move it into `lyrics/voice.md` per `suno-voice`. Never infer taste silently.
 
 ## Never
 Artist or band names in any field · negatives in Style · directions in parentheses · a stock "specific" prop · chorus text that drifts between repeats (beyond the final chorus's one or two lines) · lyrics over 3,000 characters · mentioning these rules or the word lists unless asked.

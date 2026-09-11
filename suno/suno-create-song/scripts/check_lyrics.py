@@ -106,6 +106,11 @@ def end_word(line):
     return ws[-1].strip("'").lower() if ws else ""
 
 
+def is_chorus(name):
+    n = name.lower()
+    return n == "hook" or ("chorus" in n and not n.startswith("pre"))
+
+
 # ---------- parsing ----------
 def parse_blocks(text):
     blocks, lines, i, heading = {}, text.splitlines(), 0, ""
@@ -285,6 +290,16 @@ def check_lyrics(lyrics, lists, loose=False):
             diff = sum(1 for a, b in zip(choruses[0], f) if a != b) + abs(len(choruses[0]) - len(f))
             if diff > 2:
                 F.append(("WARN", "structure", f"final chorus changes {diff} lines; keep the hook, change at most two"))
+    # the two lines before a chorus don't end on the words that end its title lines (first two, last)
+    echoed = set()
+    for prev, nxt in zip(sections, sections[1:]):
+        if is_chorus(prev["name"]) or not is_chorus(nxt["name"]):
+            continue
+        before = {end_word(t) for _, t in prev["lines"][-2:]}
+        title = {end_word(t) for _, t in nxt["lines"][:2] + nxt["lines"][-1:]}
+        for w in sorted(w for w in (before & title) - echoed if len(w) > 3):
+            echoed.add(w)
+            F.append(("WARN", prev["name"], f"ends on '{w}' like the chorus; set it up and let the chorus say it"))
     return F
 
 
@@ -299,6 +314,12 @@ def check_style(style, lists):
     for e in lists.get("style-contamination", []):
         if re.search(r"\b" + re.escape(e) + r"\w*", style, re.I):
             F.append(("WARN", "style", f"'{e}' makes it sound like a concert recording; remove unless intended"))
+    for sentence in re.split(r"[.;]", style):
+        if not re.search(r"\b(vocal|voice|singer|tenor|baritone|alto|soprano|mezzo|falsetto)", sentence, re.I):
+            continue
+        for e in lists.get("vocal-grit", []):
+            if re.search(r"\b" + re.escape(e) + r"\w*", sentence, re.I):
+                F.append(("WARN", "style", f"'{e}' in the vocal description puts rasp in the voice; say clear or clean unless the request asked for a rough voice"))
     if re.search(r"\bacoustic\b", style, re.I):
         F.append(("INFO", "style", "'acoustic' pulls in acoustic guitar; fine if that is the arrangement"))
     if re.search(r"\b(no|without|not|never)\b", style, re.I):
@@ -435,6 +456,10 @@ def self_test(lists):
     ws = "# T\n\n## Themes\n\n- Core: the ceiling\n\n## Lyrics\n\nOnly the hook so far\n\n[Chorus]\nIt's hard to bring the ceiling down\n"
     assert lyrics_section(ws).startswith("[Chorus]"), lyrics_section(ws)
     assert lyrics_section("[Verse 1]\nplain") == "[Verse 1]\nplain"
+    echo = run("[Pre-Chorus]\nI can feel it bend\nRight up against the ceiling\n\n[Chorus]\nIt's hard to break through the ceiling\nNobody said it gives\n", lists)
+    assert any("ends on 'ceiling' like the chorus" in m for _, _, m in echo), echo
+    grit = " | ".join(m for _, _, m in check_style("Dance Rock, 128 BPM. Raw, cracking tenor lead vocal, belted chorus. Warm analog guitar grit.", lists))
+    assert "'raw' in the vocal" in grit and "'crack' in the vocal" in grit and "'grit'" not in grit, grit
     print("self-test OK: slop flagged, clean passes, lyrics.md section read")
 
 
